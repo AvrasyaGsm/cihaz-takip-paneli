@@ -3,7 +3,6 @@ import pandas as pd
 import os
 import base64
 import io
-from PIL import Image
 
 # ---- Şifre kontrolü ----
 def check_password():
@@ -32,7 +31,6 @@ def check_password():
 
 if check_password():
     # ---------- Şifre doğruysa uygulama başlasın ----------
-
     CSV_DOSYA = "siparis_kayitlari.csv"
     DOSYA_KLASOR = "faturalar"
 
@@ -43,12 +41,11 @@ if check_password():
 
     st.set_page_config(page_title="📦 Cihaz Takip Paneli", layout="wide")
 
-    logo = Image.open("avrasya_gsm_logo.png")
-
+    # Başlık kısmı
     col1, col2, col3 = st.columns([1, 3, 4])
 
     with col1:
-        st.image(logo, width=130)
+        st.write("")  # Logo kaldırıldı, boşluk bırakıldı
 
     with col2:
         st.write("")
@@ -81,11 +78,13 @@ if check_password():
             dosya_yolu = os.path.join(DOSYA_KLASOR, dosya_adi)
             with open(dosya_yolu, "wb") as f:
                 f.write(dosya.read())
+        # Tarihi stringe çevir
+        tarih_str = tarih.strftime("%Y-%m-%d")
         yeni_kayit = {
             "Sipariş No": siparis_no,
             "Mağaza": magaza,
             "Ürün": urun,
-            "Tarih": tarih,
+            "Tarih": tarih_str,
             "Fatura No": fatura_no,
             "Dosya Adı": dosya_adi
         }
